@@ -11,12 +11,13 @@ This project is to build an image for your container registry. Everything is bas
 
 ## Getting Started
 ### prerequiste
-docker (Windows wsl, Ubuntu, Debain)
->  Tested on:
+- [docker](docker.com) (Windows wsl, Ubuntu, Debain)
+- [dockerhub](hub.docker.com)
+> Tested on
 ```
-Windows 10 wsl(2)
-Windows 11 wsl(2)
-Ubuntu(18.04,20.04,22.04)
+- Windows 10 wsl(2)
+- Windows 11 wsl(2)
+- Ubuntu(18.04,20.04,22.04)
 ```
 
 ### Installation process
