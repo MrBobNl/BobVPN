@@ -22,9 +22,9 @@ docker (Windows wsl, Ubuntu, Debain)
 >> export DOCKER_CLI_EXPERIMENTAL=enabled
 >> docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 >> docker buildx create --use
-2. Configure the device that is going to run the BobVPN container (Ofcourse you can use another name like HenkVPN)
-    1. Allow the device to forward ipv4
+2. Some configuration on the device itself
+- Allow ip_forward
     >> nano /etc/sysctl.conf
-            """
-            allow net.ipv4.ip_forward = 1
-            """
+    >> """
+    >> allow net.ipv4.ip_forward = 1
+    >> """
