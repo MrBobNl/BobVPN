@@ -135,6 +135,7 @@ there should be a client in the location files copy it into your client, it shou
 Make an user on [noip](noip.com)
 create a hostname
 ```
+4. Configure DDNS on the edge
 ```
 Start te ddns program (autostart will come later)
 /usr/local/bin/noip2 -C # Configures the program
@@ -151,7 +152,7 @@ Portforwarding
 Example the client on a iphone can't have any empty lines
 
 ## sources
-[digitalocean](www.digitalocean.com)
-[noip](noip.com)
-[openvpn](openvpn.net)
-[stackoverflow](https://stackoverflow.com/questions/59451531/how-to-create-tun-interface-inside-docker-container-image)
+- [digitalocean](www.digitalocean.com)
+- [noip](noip.com)
+- [openvpn](openvpn.net)
+- [stackoverflow](https://stackoverflow.com/questions/59451531/how-to-create-tun-interface-inside-docker-container-image)
