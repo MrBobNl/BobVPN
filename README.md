@@ -19,12 +19,16 @@ docker (Windows wsl, Ubuntu, Debain)
 
 ### Installation process
 1. Configure docker for the multiarch build
-> - export DOCKER_CLI_EXPERIMENTAL=enabled
-> - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-> - docker buildx create --use
+> ```
+> export DOCKER_CLI_EXPERIMENTAL=enabled
+> docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+> docker buildx create --use
+> ```
 2. Some configuration on the device itself
 > Allow ip_forward
->> nano /etc/sysctl.conf
->> """
->> allow net.ipv4.ip_forward = 1
->> """
+```
+nano /etc/sysctl.conf
+"""
+allow net.ipv4.ip_forward = 1
+"""
+```
