@@ -20,6 +20,7 @@ This project is to build an image for your container registry. Everything is bas
 - Ubuntu(18.04,20.04,22.04)
 ```
 ### Installation process
+#### Making the image
 - [ ] Configure docker for the multiarch build
 ```
 export DOCKER_CLI_EXPERIMENTAL=enabled
@@ -29,21 +30,23 @@ docker buildx create --use
 - [ ] Building the image
 ```
 git clone git@github.com:MrBobNl/BobVPN.git
-change all the #TODO using the tree or just ctrl-f for the text TODO in all the files
+change all the # TODO using the tree or just ctrl-f for the text TODO in all the files
 docker login -u username -p password
 # note this can take a while, remove platforms you don't need if you don't want them
 docker buildx build -t username/container:version --platform linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,linux/arm/v7 --push .
 ```
-- [ ] Configure your network
-1. Modem #TODO
+#### Configure network
+1. Modem 
 ```
+# TODO
 Give your device a static IP-Address and route the port you choose to the device.
 example: 
 Service Name	        External Port	Internal Port	Internal IP Address	    Protocol	Source IP	Edit	Delete
 Open VPN Server Docker	****	        ****            *.*.*.*         	    UDP			
 ```
-2. Modem + router #TODO
+2. Modem + router
 ```
+# TODO
 Give your router a static IP-Address and route the port you choose to the router. The second step is practically the same to the device.
 example: 
 Service Name	        External Port	Internal Port	Internal IP Address	    Protocol	Source IP	Edit	Delete
@@ -51,7 +54,7 @@ Modem to router VPN 	****	        ****            *.*.*.*         	    UDP
 Service Name	        External Port	Internal Port	Internal IP Address	    Protocol	Source IP	Edit	Delete
 Open VPN Server Docker	****	        ****            *.*.*.*         	    UDP		
 ```
-- [ ] Configuration on the device itself
+#### Configuration device
 1. login as root
 ```
 sudo -i
@@ -72,6 +75,7 @@ DEFAULT_FORWARD_POLICY="ACCEPT"
 ```
 4. Allow traffic from the vpn to the right interface with routing in your firewall
 ```
+# TODO
 ip a
 -> search for the interface you want to use (it needs to be the default one) like eth0 or eno1 etc.
 nano /etc/ufw/before.rules
@@ -88,7 +92,7 @@ copy pasta this after:
 # NAT table rules
 *nat
 :POSTROUTING ACCEPT [0:0]
-# TODO Allow traffic from OpenVPN client to eth0 (change to the interface you found! and if you change the domain network)
+# Allow traffic from OpenVPN client to eth0 (change to the interface you found! and if you change the domain network)
 -A POSTROUTING -s 10.5.0.0/24 -o eth0 -j MASQUERADE
 COMMIT
 # END OPENVPN RULES
@@ -96,17 +100,20 @@ COMMIT
 ```
 5. Configure your firewall to allow udp communication over the chosen port
 ```
-ufw allow ****/udp # TODO
+# TODO
+ufw allow ****/udp
 ufw allow OpenSSH
 ufw disable
 ufw enable
 ```
-6. Reroute traffic to the tunnel. (mandatory if you want internet with the change off public ip) # TODO
+6. Reroute traffic to the tunnel. (mandatory if you want internet with the change off public ip)
 ```
+# TODO
 iptables -t nat -A POSTROUTING -s 10.5.0.0/24 -o eth1 -j MASQUERADE
 ```
-7. Check if there is more then one connection, make sure you route to your default gateway # TODO
+7. Check if there is more then one connection, make sure you route to your default gateway
 ```
+# TODO
 route change -net default gw *.*.*.* netmask 0.0.0.0 dev eth0 metric 1 static
 ```
 - [ ] Running the docker on the edge
