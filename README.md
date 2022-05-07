@@ -21,13 +21,13 @@ This project is to build an image for your container registry. Everything is bas
 ```
 
 ### Installation process
-1. Configure docker for the multiarch build
+- [ ] Configure docker for the multiarch build
 ```
 export DOCKER_CLI_EXPERIMENTAL=enabled
 docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 docker buildx create --use
 ```
-1. Building the image
+- [ ] Building the image
 ```
 git clone git@github.com:MrBobNl/BobVPN.git
 change all the #TODO using the tree or just ctrl-f for the text TODO in all the files
@@ -35,7 +35,7 @@ docker login -u username -p password
 # note this can take a while, remove platforms you don't need if you don't want them
 docker buildx build -t username/container:version --platform linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,linux/arm/v7 --push .
 ```
-1. Configure your network
+- [ ] Configure your network
 > Modem #TODO
 ```
 Give your device a static IP-Address and route the port you choose to the device.
@@ -52,7 +52,7 @@ Modem to router VPN 	****	        ****            *.*.*.*         	    UDP
 Service Name	        External Port	Internal Port	Internal IP Address	    Protocol	Source IP	Edit	Delete
 Open VPN Server Docker	****	        ****            *.*.*.*         	    UDP		
 ```
-1. Configuration on the device itself
+- [ ] Configuration on the device itself
 > login as root
 ```
 sudo -i
@@ -135,7 +135,7 @@ create a hostname
 /usr/local/bin/noip2    # Starts the program
 ```
 ### Common mistakes to check
-1. You can see in the logs of the docker container what is happening, if there is nothing it is probraly the port forwarding
+- [ ] You can see in the logs of the docker container what is happening, if there is nothing it is probraly the port forwarding
 ```
 Portforwarding
 - Ports: The external port is the same as in the client. The internal port needs to be the same as the docker container.
