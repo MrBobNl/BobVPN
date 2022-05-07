@@ -43,11 +43,11 @@ WORKDIR /home/happy/easy-rsa
 RUN ./easyrsa init-pki
 RUN > vars
 # TODO: fill in your own information
-RUN echo 'set_var EASYRSA_REQ_COUNTRY    "COUNTRY"' > vars
-RUN echo 'set_var EASYRSA_REQ_PROVINCE   "PROVINCE"' >> vars
-RUN echo 'set_var EASYRSA_REQ_CITY       "CITY"' >> vars
-RUN echo 'set_var EASYRSA_REQ_ORG        "ORG"' >> vars
-RUN echo 'set_var EASYRSA_REQ_EMAIL      "EMAIL"' >> vars
+RUN echo 'set_var EASYRSA_REQ_COUNTRY    "XX"' > vars
+RUN echo 'set_var EASYRSA_REQ_PROVINCE   "XXXXXXX"' >> vars
+RUN echo 'set_var EASYRSA_REQ_CITY       "XXXX"' >> vars
+RUN echo 'set_var EASYRSA_REQ_ORG        "XXX"' >> vars
+RUN echo 'set_var EASYRSA_REQ_EMAIL      "XXXXXXXX"' >> vars
 RUN echo 'set_var EASYRSA_REQ_OU         "Community"' >> vars
 RUN echo 'set_var EASYRSA_ALGO           "ec"' >> vars
 RUN echo 'set_var EASYRSA_DIGEST         "sha512"' >> vars
@@ -69,7 +69,7 @@ WORKDIR /home/happy/csr
 RUN openssl genrsa -out happy-server.key
 # TODO: fill in your own information
 RUN openssl req -new -key happy-server.key -out happy-server.req -subj \
-    /C=COUNTRY/ST=PROVINCE/L=CITY/O=ORG/OU=Community/CN=happy-server
+    /C=XX/ST=XXXXXXX/L=XXXX/O=XXX/OU=Community/CN=happy-server
 RUN openssl req -in happy-server.req -noout -subject
 RUN cp happy-server.req /tmp/happy-server.req
 
@@ -166,7 +166,6 @@ RUN wget http://www.noip.com/client/linux/noip-duc-linux.tar.gz
 RUN tar xf noip-duc-linux.tar.gz
 WORKDIR /usr/local/src/noip-2.1.9-1/
 RUN make
-RUN make install
 # https://www.noip.com/support/knowledgebase/installing-the-linux-dynamic-update-client-on-ubuntu/
 # https://my.noip.com/dynamic-dns
 

@@ -137,8 +137,10 @@ create a hostname
 ```
 4. Configure DDNS on the edge
 ```
+cd /usr/local/src/noip-2.1.9-1
+make install
 Start te ddns program (autostart will come later)
-/usr/local/bin/noip2 -C # Configures the program
+# if the configuration goes wrong for a retry -> /usr/local/bin/noip2 -C
 /usr/local/bin/noip2    # Starts the program
 ```
 ### Common mistakes to check
