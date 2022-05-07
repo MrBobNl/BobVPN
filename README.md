@@ -13,13 +13,12 @@ This project is to build an image for your container registry. Everything is bas
 ### prerequiste
 - [docker](docker.com) (Windows wsl, Ubuntu, Debain)
 - [dockerhub](hub.docker.com)
-> Tested on
+- [ ] Tested on
 ```
 - Windows 10 wsl(2)
 - Windows 11 wsl(2)
 - Ubuntu(18.04,20.04,22.04)
 ```
-
 ### Installation process
 - [ ] Configure docker for the multiarch build
 ```
@@ -36,15 +35,15 @@ docker login -u username -p password
 docker buildx build -t username/container:version --platform linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,linux/arm/v7 --push .
 ```
 - [ ] Configure your network
-> Modem #TODO
 ```
+- Modem #TODO
 Give your device a static IP-Address and route the port you choose to the device.
 example: 
 Service Name	        External Port	Internal Port	Internal IP Address	    Protocol	Source IP	Edit	Delete
 Open VPN Server Docker	****	        ****            *.*.*.*         	    UDP			
 ```
-> Modem + router #TODO
 ```
+- Modem + router #TODO
 Give your router a static IP-Address and route the port you choose to the router. The second step is practically the same to the device.
 example: 
 Service Name	        External Port	Internal Port	Internal IP Address	    Protocol	Source IP	Edit	Delete
@@ -53,8 +52,8 @@ Service Name	        External Port	Internal Port	Internal IP Address	    Protoco
 Open VPN Server Docker	****	        ****            *.*.*.*         	    UDP		
 ```
 - [ ] Configuration on the device itself
-> login as root
 ```
+- login as root
 sudo -i
 ```
 > Allow ip_forward
