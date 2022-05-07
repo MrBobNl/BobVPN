@@ -110,6 +110,9 @@ ufw enable
 ```
 # TODO
 iptables -t nat -A POSTROUTING -s 10.5.0.0/24 -o eth1 -j MASQUERADE
+# note* sometimes it does not save it after reboot. If this happens do the following
+# do the configurations and then install (it saves it at /etc/iptables/rules.v4 and /etc/iptables/rules.v6)
+apt install iptables-persistent
 ```
 7. Check if there is more then one connection, make sure you route to your default gateway
 ```
