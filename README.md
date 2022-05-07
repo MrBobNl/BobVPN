@@ -1,8 +1,8 @@
 # BobVPN
-Custom implementation of OpenVPN (usermanagement, server and multi-arch)
+Custom implementation of OpenVPN (usermanagement, server, multi-arch and ddns)
 
 Work in proces! It works but stil needs adjustment hardcoded!
-If you are using Visual Studio Code, install the extension: Todo Tree. you will get a tree on your left bar with what you need to fill in.
+If you are using Visual Studio Code, install the extension: Todo Tree. you will get a tree on your left bar with what you need to fill in before the build.
 
 # Introduction
 Your looking for an managed OpenVPN with an usermanagement in there that works multi-arch? Stop looking! :D
@@ -33,5 +33,12 @@ docker buildx create --use
 nano /etc/sysctl.conf
 """
 allow net.ipv4.ip_forward = 1
+"""
+```
+> Allow the firewall to be default accept forwards
+```
+nano /etc/default/ufw
+"""
+DEFAULT_FORWARD_POLICY="ACCEPT"
 """
 ```
