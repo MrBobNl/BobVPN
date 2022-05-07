@@ -35,15 +35,15 @@ docker login -u username -p password
 docker buildx build -t username/container:version --platform linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,linux/arm/v7 --push .
 ```
 - [ ] Configure your network
+1. Modem #TODO
 ```
-- Modem #TODO
 Give your device a static IP-Address and route the port you choose to the device.
 example: 
 Service Name	        External Port	Internal Port	Internal IP Address	    Protocol	Source IP	Edit	Delete
 Open VPN Server Docker	****	        ****            *.*.*.*         	    UDP			
 ```
+2. Modem + router #TODO
 ```
-- Modem + router #TODO
 Give your router a static IP-Address and route the port you choose to the router. The second step is practically the same to the device.
 example: 
 Service Name	        External Port	Internal Port	Internal IP Address	    Protocol	Source IP	Edit	Delete
