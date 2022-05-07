@@ -27,7 +27,36 @@ export DOCKER_CLI_EXPERIMENTAL=enabled
 docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 docker buildx create --use
 ```
-2. Some configuration on the device itself
+1. Building the image
+```
+git clone git@github.com:MrBobNl/BobVPN.git
+change all the #TODO using the tree or just ctrl-f for the text TODO in all the files
+docker login -u username -p password
+# note this can take a while, remove platforms you don't need if you don't want them
+docker buildx build -t username/container:version --platform linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,linux/arm/v7 --push .
+```
+1. Configure your network
+> Modem #TODO
+```
+Give your device a static IP-Address and route the port you choose to the device.
+example: 
+Service Name	        External Port	Internal Port	Internal IP Address	    Protocol	Source IP	Edit	Delete
+Open VPN Server Docker	****	        ****            *.*.*.*         	    UDP			
+```
+> Modem + router #TODO
+```
+Give your router a static IP-Address and route the port you choose to the router. The second step is practically the same to the device.
+example: 
+Service Name	        External Port	Internal Port	Internal IP Address	    Protocol	Source IP	Edit	Delete
+Modem to router VPN 	****	        ****            *.*.*.*         	    UDP			
+Service Name	        External Port	Internal Port	Internal IP Address	    Protocol	Source IP	Edit	Delete
+Open VPN Server Docker	****	        ****            *.*.*.*         	    UDP		
+```
+1. Configuration on the device itself
+> login as root
+```
+sudo -i
+```
 > Allow ip_forward
 ```
 nano /etc/sysctl.conf
@@ -42,3 +71,81 @@ nano /etc/default/ufw
 DEFAULT_FORWARD_POLICY="ACCEPT"
 """
 ```
+> Allow traffic from the vpn to the right interface with routing in your firewall
+```
+ip a
+-> search for the interface you want to use (it needs to be the default one) like eth0 or eno1 etc.
+nano /etc/ufw/before.rules
+copy pasta this after:
+# rules.before
+#
+# Rules that should be run before the ufw command line added rules. Custom
+# rules should be added to one of these chains:
+#   ufw-before-input
+#   ufw-before-output
+#   ufw-before-forward
+"""
+# START OPENVPN RULES
+# NAT table rules
+*nat
+:POSTROUTING ACCEPT [0:0]
+# TODO Allow traffic from OpenVPN client to eth0 (change to the interface you found! and if you change the domain network)
+-A POSTROUTING -s 10.5.0.0/24 -o eth0 -j MASQUERADE
+COMMIT
+# END OPENVPN RULES
+"""
+```
+> Configure your firewall to allow udp communication over the chosen port
+```
+ufw allow ****/udp # TODO
+ufw allow OpenSSH
+ufw disable
+ufw enable
+```
+> Reroute traffic to the tunnel. (mandatory if you want internet with the change off public ip) # TODO
+```
+iptables -t nat -A POSTROUTING -s 10.5.0.0/24 -o eth1 -j MASQUERADE
+```
+> Check if there is more then one connection, make sure you route to your default gateway # TODO
+```
+route change -net default gw *.*.*.* netmask 0.0.0.0 dev eth0 metric 1 static
+```
+4. Running the docker on the edge
+> Running your build image on your device
+```
+# TODO
+docker login -u username -p password
+docker run -it -d --restart=unless-stopped --cap-add=NET_ADMIN --privileged --network=host --hostname **** --name **** username/container:version
+```
+> Making an client
+```
+docker exec -it **$name** bash
+# at the moment for some reason the bash script does not work properly from the build if you remove it and make a new one copy pasta the file in there it works fine. If you know what it is let me know :D
+bash client.sh
+there should be a client in the location files copy it into your client, it should work :D
+```
+5. DDNS if your public ip switches.
+> Make an user on [noip](noip.com)
+```
+create a hostname
+```
+> Start te ddns program (autostart will come later)
+```
+/usr/local/bin/noip2 -C # Configures the program
+/usr/local/bin/noip2    # Starts the program
+```
+### Common mistakes to check
+1. You can see in the logs of the docker container what is happening, if there is nothing it is probraly the port forwarding
+```
+Portforwarding
+- Ports: The external port is the same as in the client. The internal port needs to be the same as the docker container.
+- Protocol: UDP (not tcp)
+```
+2. The TLS is not going alright, the config is copy pasted correctly.
+Example the client on a iphone can't have any empty lines
+
+## sources
+[digitalocean](www.digitalocean.com)
+[noip](noip.com)
+[openvpn](openvpn.net)
+[stackoverflow](https://stackoverflow.com/questions/59451531/how-to-create-tun-interface-inside-docker-container-image)
