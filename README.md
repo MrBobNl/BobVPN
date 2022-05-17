@@ -13,7 +13,7 @@ This project is to build an image for your container registry. Everything is bas
 ### prerequiste
 - [docker](docker.com) (Windows wsl, Ubuntu, Debain)
 - [dockerhub](hub.docker.com)
-- [ ] Tested on
+- [] Tested on
 ```
 - Windows 10 wsl(2)
 - Windows 11 wsl(2)
@@ -21,19 +21,27 @@ This project is to build an image for your container registry. Everything is bas
 ```
 ### Installation process
 #### Making the image
-- [ ] Configure docker for the multiarch build
+- [] Configure docker for the multiarch build
 ```
 export DOCKER_CLI_EXPERIMENTAL=enabled
 docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 docker buildx create --use
 ```
-- [ ] Building the image
+- [] Building the image
 ```
 git clone git@github.com:MrBobNl/BobVPN.git
 change all the # TODO using the tree or just ctrl-f for the text TODO in all the files
 docker login -u username -p password
 # note this can take a while, remove platforms you don't need if you don't want them
-docker buildx build -t username/container:version --platform linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,linux/arm/v7 --push .
+docker buildx build \
+--build-arg password=example_password \
+--build-arg country=NL \
+--build-arg province=NoordBrabant \
+--build-arg city=BergenOpZoom \
+--build-arg email=example@vpn.com \
+--build-arg public_ip=example.ddns.net \
+--build-arg port=1194 \
+-t username/container:version --platform linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,linux/arm/v7 --push .
 ```
 #### Configure network
 1. Modem 
@@ -67,6 +75,7 @@ allow net.ipv4.ip_forward = 1
 """
 ```
 3. Allow the firewall to be default accept forwards
+Note* firewall is optional, but use it! if you don't know what a firewall does. Search engines are your friends!
 ```
 nano /etc/default/ufw
 """
@@ -119,12 +128,12 @@ apt install iptables-persistent
 # TODO
 route change -net default gw *.*.*.* netmask 0.0.0.0 dev eth0 metric 1 static
 ```
-- [ ] Running the docker on the edge
+- [] Running the docker on the edge
 1. Running your build image on your device
 ```
 # TODO
 docker login -u username -p password
-docker run -it -d --restart=unless-stopped --cap-add=NET_ADMIN --privileged --network=host --hostname **** --name **** username/container:version
+docker run -it -d --restart=unless-stopped --cap-add=NET_ADMIN --privileged --network=host --hostname bobvpn --name bobvpn username/container:version
 ```
 2. Making an client
 ```
@@ -147,13 +156,13 @@ Start te ddns program (autostart will come later)
 /usr/local/bin/noip2    # Starts the program
 ```
 ### Common mistakes to check
-- [ ] You can see in the logs of the docker container what is happening, if there is nothing it is probraly the port forwarding
+- [] You can see in the logs of the docker container what is happening, if there is nothing it is probraly the port forwarding
 ```
 Portforwarding
 - Ports: The external port is the same as in the client. The internal port needs to be the same as the docker container.
 - Protocol: UDP (not tcp)
 ```
-- [ ] The TLS is not going alright, the config is copy pasted correctly.
+- [] The TLS is not going alright, the config is copy pasted correctly.
 Example the client on a iphone can't have any empty lines
 
 ## sources

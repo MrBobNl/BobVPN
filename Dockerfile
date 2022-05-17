@@ -7,6 +7,33 @@ LABEL Sub_title="usermanagement, server, multi-arch and ddns"
 LABEL Version="1.0.0"
 LABEL Description="Custom implementation of OpenVPN (usermanagement, server, multi-arch and ddns)"
 
+# Here we put all the arguments, put hardcoded in here or with build arguments!
+## The password is used to give the user happy and root user a password
+ARG password
+ENV env_password=$password
+## This is some information for making the keys
+ARG country
+ARG province
+ARG city
+ARG email
+ENV env_country=$country
+ENV env_province=$province
+ENV env_city=$city
+ENV env_email=$email
+## Change the public ip and port [if you have a public ip that switches, it is usefull to use noip to make it flexible with a dns]
+ARG public_ip
+ARG port
+ENV env_public_ip=$public_ip
+ENV env_port=$port
+# print filled information to check if everything went well before the build (the build can take a while)
+RUN echo "These are all the filled in the variables: "
+RUN echo "country: ${country}"
+RUN echo "province: ${env_province}"
+RUN echo "city: ${env_city}"
+RUN echo "email: ${env_email}"
+RUN echo "public_ip: ${env_public_ip}"
+RUN echo "port: ${env_port}"
+
 RUN echo "install requirements"
 # apt list -a <packagename> for version
 RUN apt-get update && apt-get install -y \
@@ -26,10 +53,9 @@ RUN apt-get update && apt-get install -y \
 RUN echo "create local user happy"
 # -r = create system account, -m --create-home, -d home directory, -G group to root, -u UID, -p password
 RUN useradd -rm -d /home/happy -s /bin/bash -g root -G sudo -u 6666 happy -p x
-# change password off happy and root (root is a standard user with the ubuntu 20.04 image)
-# TODO: change password to whatever you want
-RUN echo 'happy:password' | chpasswd
-RUN echo 'root:password' | chpasswd
+# change password off happy and root (root is a standard user with the ubuntu 22.04 image)
+RUN echo "happy:${env_password}" | chpasswd
+RUN echo "root:${env_password}" | chpasswd
 
 # Set Up and Configure a Certificate Authority (CA)
 ## login into user happy
@@ -42,12 +68,12 @@ RUN chmod 700 /home/happy/easy-rsa
 WORKDIR /home/happy/easy-rsa
 RUN ./easyrsa init-pki
 RUN > vars
-# TODO: fill in your own information
-RUN echo 'set_var EASYRSA_REQ_COUNTRY    "XX"' > vars
-RUN echo 'set_var EASYRSA_REQ_PROVINCE   "XXXXXXX"' >> vars
-RUN echo 'set_var EASYRSA_REQ_CITY       "XXXX"' >> vars
-RUN echo 'set_var EASYRSA_REQ_ORG        "XXX"' >> vars
-RUN echo 'set_var EASYRSA_REQ_EMAIL      "XXXXXXXX"' >> vars
+# Fill in your own information
+RUN echo "set_var EASYRSA_REQ_COUNTRY    \"${env_country}\"" > vars
+RUN echo "set_var EASYRSA_REQ_PROVINCE   \"${env_province}\"" >> vars
+RUN echo "set_var EASYRSA_REQ_CITY       \"${env_city}\"" >> vars
+RUN echo 'set_var EASYRSA_REQ_ORG        "BobVPN"' >> vars
+RUN echo "set_var EASYRSA_REQ_EMAIL      \"${env_email}\"" >> vars
 RUN echo 'set_var EASYRSA_REQ_OU         "Community"' >> vars
 RUN echo 'set_var EASYRSA_ALGO           "ec"' >> vars
 RUN echo 'set_var EASYRSA_DIGEST         "sha512"' >> vars
@@ -67,9 +93,8 @@ USER happy
 RUN mkdir ~/csr
 WORKDIR /home/happy/csr
 RUN openssl genrsa -out happy-server.key
-# TODO: fill in your own information
 RUN openssl req -new -key happy-server.key -out happy-server.req -subj \
-    /C=XX/ST=XXXXXXX/L=XXXX/O=XXX/OU=Community/CN=happy-server
+    /C=${env_country}/ST=${env_province}/L=${env_city}/O=BobVPN/OU=Community/CN=happy-server
 RUN openssl req -in happy-server.req -noout -subject
 RUN cp happy-server.req /tmp/happy-server.req
 
@@ -124,7 +149,7 @@ RUN echo "log into root"
 USER root
 WORKDIR /
 RUN mkdir /root/client-configs
-ADD /client-configs/client.sh /root/client-configs/base.conf
+ADD /client-configs/base.conf /root/client-configs/base.conf
 ADD /client-configs/client.sh /root/client-configs/client.sh
 ADD /client-configs/make_config.sh /root/client-configs/make_config.sh
 RUN chmod -R 755 /root/client-configs
@@ -135,25 +160,18 @@ RUN mkdir files
 RUN mkdir keys
 
 # Copy pasta server settings in docker
-COPY server.conf /etc/openvpn/server/server.conf
+COPY server.conf /etc/openvpn/server.conf
 WORKDIR /etc/openvpn/server
 RUN cp ca.crt ..
-RUN cp server.conf ..
 RUN cp server.crt ..
 RUN cp server.key ..
 RUN cp ta.key ..
 WORKDIR /etc/openvpn/
 RUN mkdir ccd
-# add readme
-RUN echo 'Be sure to make the client that u want to manage has the exact name ass the file name' > /etc/openvpn/ccd/readme.md
-# sample static ip
-RUN echo 'ifconfig-push 10.7.0.5 10.7.0.6' > /etc/openvpn/ccd/sample_static_ip
-# sample public ip change
-RUN echo 'ifconfig-push 10.7.0.9 10.7.0.10' > /etc/openvpn/ccd/sample_public_ip
-RUN echo 'redirect-gateway autolocal def1 bypass-dhcp' >> /etc/openvpn/ccd/sample_public_ip
-RUN echo 'dhcp-option DNS 208.67.220.222' >> /etc/openvpn/ccd/sample_public_ip
-RUN echo 'dhcp-option DNS 208.67.220.220' >> /etc/openvpn/ccd/sample_public_ip
-RUN echo 'block-outside-dns' >> /etc/openvpn/ccd/sample_public_ip
+# add readme and examples
+ADD /examples/readme.md /etc/openvpn/ccd/readme.md
+ADD /examples/sample_static_ip /etc/openvpn/ccd/sample_static_ip
+ADD /examples/sample_public_ip /etc/openvpn/ccd/sample_public_ip
 
 # Adjust network configurations
 RUN echo 'net.ipv4.ip_forward = 1' >> /etc/sysctl.conf
@@ -168,6 +186,11 @@ WORKDIR /usr/local/src/noip-2.1.9-1/
 RUN make
 # https://www.noip.com/support/knowledgebase/installing-the-linux-dynamic-update-client-on-ubuntu/
 # https://my.noip.com/dynamic-dns
+
+# Choose the public ip and port off the clients
+RUN sed -i "s/remote public_ip_address port/remote ${env_public_ip} ${env_port}/g" /root/client-configs/base.conf
+# Choose the port for the server
+RUN sed -i "s/port/port ${env_port}/g" /etc/openvpn/server.conf
 
 # Run configuration.sh shell script to do some configuration and start the openvpn service
 WORKDIR /
