@@ -166,7 +166,7 @@ Portforwarding
 Example the client on a iphone can't have any empty lines
 
 ## sources
-- [digitalocean](www.digitalocean.com)
-- [noip](noip.com)
-- [openvpn](openvpn.net)
+- [digitalocean](https://www.digitalocean.com/)
+- [noip](https://www.noip.com/)
+- [openvpn](https://openvpn.net/)
 - [stackoverflow](https://stackoverflow.com/questions/59451531/how-to-create-tun-interface-inside-docker-container-image)
