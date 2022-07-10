@@ -189,9 +189,9 @@ RUN make
 # https://my.noip.com/dynamic-dns
 
 # Choose the public ip and port off the clients
-RUN sed -i "s/remote public_ip_address port/remote ${env_public_ip} ${$external_port}/g" /root/client-configs/base.conf
+RUN sed -i "s/remote public_ip_address port/remote ${env_public_ip} ${env_external_port}/g" /root/client-configs/base.conf
 # Choose the port for the server
-RUN sed -i "s/port/port ${$internal_port}/g" /etc/openvpn/server.conf
+RUN sed -i "s/port/port ${env_internal_port}/g" /etc/openvpn/server.conf
 
 # Run configuration.sh shell script to do some configuration and start the openvpn service
 WORKDIR /
