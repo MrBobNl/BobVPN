@@ -25,6 +25,7 @@ This project is to build an image for your container registry. Everything is bas
 If you have worked with OpenVPN or/and with networks regularly before. Then i would just jump into making the image, configure your Modem and/or router yourself with the desired firewall yourself and you will probraly be go to go for an solid 95% already. Just jump into the last part to created a client in the docker in the client-configs folder :D Still to steep of an step? there is an step by step down under here :D
 
 ### Step-by-step installation process
+If you have no rights, just type sudo in front of every command ;-) or loggin with sudo -i as root.
 #### Making the image
 - [] Configure docker for the multiarch build
 ```
@@ -48,6 +49,8 @@ docker buildx build \
 --build-arg internal_port=1194 \
 --build-arg external_port=1194 \
 -t username/container:version --platform linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,linux/arm/v7 --push .
+
+Note* if you run into: authorization failed. Big chance you did not login yet into your docker hub
 ```
 #### Configure network
 1. Modem 
