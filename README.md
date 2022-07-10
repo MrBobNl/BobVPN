@@ -9,6 +9,13 @@ Your looking for an managed OpenVPN with an usermanagement in there that works m
 
 This project is to build an image for your container registry. Everything is based on ubuntu 22.04 LTS, at the moment it is build for linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,linux/arm/v7. In other words, for almost every system like 32-bit (arm/v7) and 64-bit (arm64) on raspberry and windows computers (amd64).
 
+# Table of Contents
+
+1. [Getting Started](#Getting-Started)
+2. [Usage](#Usage)
+2. [Troubleshooting](#troubleshooting)
+3. [sources](#sources)
+
 ## Getting Started
 ### prerequiste
 - [docker](docker.com) (Windows wsl, Ubuntu, Debain)
@@ -173,6 +180,17 @@ Portforwarding
 ```
 - [] The TLS is not going alright, the config is copy pasted correctly.
 Example the client on a iphone can't have any empty lines
+
+## Usage
+When you have started up the container and everything is working it is time to start making clients and troubleshooting when necessary.
+1. Making users usually i just use the bash client.sh and give them the rights i want with the ccd
+2. If you wish to get to a network behind a client simply uncomment the iroute part and insert your own network that you want to reach. and add the route in the server the same way! :D
+3. If you want to see the lag just use something like tail -f or watch or to look into the logs. (/var/log/openvpn/openvpn.log) Also possible to look at the status, but it is much slower in refresh rate!
+
+## Troubleshooting
+1. Most of the times it is a typo or a small configuration that gone wrong. It can be as simple as that in the modem only TCP is let through instead of UDP. So first step is take a breather and read all the steps again.
+2. Next step would be go into the logs and google the isseu at hand. Try turning on/off the firewall for example to look what the problem can be.
+3. As last resort you can contact me, i will do my best to be helpfull :D
 
 ## sources
 - [digitalocean](https://www.digitalocean.com/)
