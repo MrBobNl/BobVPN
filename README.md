@@ -185,11 +185,11 @@ Example the client on a iphone can't have any empty lines
 When you have started up the container and everything is working it is time to start making clients and troubleshooting when necessary.
 1. Making users usually i just use the bash client.sh and give them the rights i want with the ccd
 2. Installing client on ubuntu with autoconnect
-sudo apt-get install openvpn
-*test config with -> (sudo) openvpn --config client.ovpn
-nano /etc/openvpn/client.conf 'insert config'
-sudo reboot
-check with ip a
+- sudo apt-get install openvpn
+- *test config with -> (sudo) openvpn --config client.ovpn
+- nano /etc/openvpn/client.conf 'insert config'
+- sudo reboot
+- check with `ip a`
 3. Installing client on windows with autoconnect
 Just use the OpenVPN GUI for windows
 [OpenVPN-GUI-for-windows](https://openvpn.net/community-downloads/)
