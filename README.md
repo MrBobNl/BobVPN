@@ -1,8 +1,8 @@
 # BobVPN
 Custom implementation of OpenVPN (usermanagement, server, multi-arch and ddns)
 
-Work in proces! It works but stil needs adjustment hardcoded!
-If you are using Visual Studio Code, install the extension: Todo Tree. you will get a tree on your left bar with what you need to fill in before the build.
+I use it myself now regularly. Last usage is to add an Robustel R2011 to my container to be able to talk to the network the is behind it. For proof of conceps in hard to reach location it is perfect! Plug it in, everything has an network and internet + secure connection over the vpn of the container :D But still not in the final state i would like, so if you use it, please let me know what i can improve or if you have suggestion ofcourse ;-)
+Left some TODO's in there, if you are using Visual Studio Code, install the extension: Todo Tree. You will get a tree on your left bar with what you need to fill in before the build.
 
 # Introduction
 Your looking for an managed OpenVPN with an usermanagement in there that works multi-arch? Stop looking! :D
