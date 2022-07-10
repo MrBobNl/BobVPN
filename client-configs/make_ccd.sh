@@ -1,3 +1,4 @@
+# not tested yet!
 echo "Fill in the desired client name: "
 read client
 echo "You filled in: $client"

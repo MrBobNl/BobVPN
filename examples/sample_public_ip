@@ -1,6 +1,0 @@
-ifconfig-push 10.5.0.9 10.5.0.10
-
-redirect-gateway autolocal def1 bypass-dhcp
-dhcp-option DNS 1.1.1.1
-dhcp-option DNS 1.0.0.1
-block-outside-dns

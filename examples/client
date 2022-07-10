@@ -1,0 +1,11 @@
+# For the static ip-address
+ifconfig-push 10.5.0.5 10.5.0.6
+
+# for an routing to see behind the client. So for example if the client is in an 192.168.18.0 add it like this, uncomment ; to make active
+;iroute 192.168.18.0 255.255.255.0
+
+# This will cause al the internet traffic to go over the server, uncomment ; to make active
+;redirect-gateway autolocal def1 bypass-dhcp
+;dhcp-option DNS 1.1.1.1
+;dhcp-option DNS 1.0.0.1
+;block-outside-dns

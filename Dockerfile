@@ -169,9 +169,7 @@ RUN cp ta.key ..
 WORKDIR /etc/openvpn/
 RUN mkdir ccd
 # add readme and examples
-ADD /examples/readme.md /etc/openvpn/ccd/readme.md
-ADD /examples/sample_static_ip /etc/openvpn/ccd/sample_static_ip
-ADD /examples/sample_public_ip /etc/openvpn/ccd/sample_public_ip
+ADD /examples/client /etc/openvpn/ccd/client
 
 # Adjust network configurations
 RUN echo 'net.ipv4.ip_forward = 1' >> /etc/sysctl.conf

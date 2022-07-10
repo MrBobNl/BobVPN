@@ -1,1 +1,0 @@
-Be sure to make the client that u want to manage has the exact name ass the file name

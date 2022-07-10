@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "root"
 cd ~/easy-rsa
+echo "If this is there first client you make, try naming it client. This wil use the example ccd ;-)"
 echo "Fill in the desired client name: "
 read client
 echo "You filled in: $client"
