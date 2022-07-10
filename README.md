@@ -184,6 +184,15 @@ Example the client on a iphone can't have any empty lines
 ## Usage
 When you have started up the container and everything is working it is time to start making clients and troubleshooting when necessary.
 1. Making users usually i just use the bash client.sh and give them the rights i want with the ccd
+2. Installing client on ubuntu with autoconnect
+sudo apt-get install openvpn
+*test config with -> (sudo) openvpn --config client.ovpn
+nano /etc/openvpn/client.conf 'insert config'
+sudo reboot
+check with ip a
+3. Installing client on windows with autoconnect
+Just use the OpenVPN GUI for windows
+[OpenVPN-GUI-for-windows](https://openvpn.net/community-downloads/)
 2. If you wish to get to a network behind a client simply uncomment the iroute part and insert your own network that you want to reach. and add the route in the server the same way! :D
 3. If you want to see the lag just use something like tail -f or watch or to look into the logs. (/var/log/openvpn/openvpn.log) Also possible to look at the status, but it is much slower in refresh rate!
 
