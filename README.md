@@ -13,12 +13,17 @@ This project is to build an image for your container registry. Everything is bas
 ### prerequiste
 - [docker](docker.com) (Windows wsl, Ubuntu, Debain)
 - [dockerhub](hub.docker.com)
-- [] Tested on
+
+### regularly on (tested)
 ```
-- Windows 10 wsl(2)
-- Windows 11 wsl(2)
-- Ubuntu(18.04,20.04,22.04)
+- OS -> Ubuntu 18.04 & 20.04
+- OS -> Debian Stretch & buster
+- OS -> probraly works for more but not used yet, please let me know if you do :D
 ```
+
+### Experienced user
+If you have worked with OpenVPN or/and with networks regularly before. Then i would just jump into making the image, configure your Modem and/or router yourself with the desired firewall yourself and you will probraly be go to go for an solid 95% already. Just jump into the last part to created a client in the docker in the client-configs folder :D Still to steep of an step? there is an step by step down under here :D
+
 ### Installation process
 #### Making the image
 - [] Configure docker for the multiarch build
