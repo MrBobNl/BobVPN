@@ -189,7 +189,7 @@ When you have started up the container and everything is working it is time to s
 - *test config with -> (sudo) openvpn --config client.ovpn
 - nano /etc/openvpn/client.conf 'insert config'
 - sudo reboot
-- check with `ip a`
+- check with `ip a` if there is a tunnel set-up on your device
 3. Installing client on windows with autoconnect
 Just use the OpenVPN GUI for windows
 [OpenVPN-GUI-for-windows](https://openvpn.net/community-downloads/)
