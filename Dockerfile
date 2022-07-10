@@ -22,9 +22,11 @@ ENV env_city=$city
 ENV env_email=$email
 ## Change the public ip and port [if you have a public ip that switches, it is usefull to use noip to make it flexible with a dns]
 ARG public_ip
-ARG port
+ARG internal_port
+ARG external_port
 ENV env_public_ip=$public_ip
-ENV env_port=$port
+ENV env_internal_port=$internal_port
+ENV env_external_port=$external_port
 # print filled information to check if everything went well before the build (the build can take a while)
 RUN echo "These are all the filled in the variables: "
 RUN echo "country: ${country}"
@@ -32,7 +34,8 @@ RUN echo "province: ${env_province}"
 RUN echo "city: ${env_city}"
 RUN echo "email: ${env_email}"
 RUN echo "public_ip: ${env_public_ip}"
-RUN echo "port: ${env_port}"
+RUN echo "internal_port: ${env_internal_port}"
+RUN echo "external_port: ${env_external_port}"
 
 RUN echo "install requirements"
 # apt list -a <packagename> for version
@@ -186,9 +189,9 @@ RUN make
 # https://my.noip.com/dynamic-dns
 
 # Choose the public ip and port off the clients
-RUN sed -i "s/remote public_ip_address port/remote ${env_public_ip} ${env_port}/g" /root/client-configs/base.conf
+RUN sed -i "s/remote public_ip_address port/remote ${env_public_ip} ${$external_port}/g" /root/client-configs/base.conf
 # Choose the port for the server
-RUN sed -i "s/port/port ${env_port}/g" /etc/openvpn/server.conf
+RUN sed -i "s/port/port ${$internal_port}/g" /etc/openvpn/server.conf
 
 # Run configuration.sh shell script to do some configuration and start the openvpn service
 WORKDIR /

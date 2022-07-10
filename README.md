@@ -40,7 +40,8 @@ docker buildx build \
 --build-arg city=BergenOpZoom \
 --build-arg email=example@vpn.com \
 --build-arg public_ip=example.ddns.net \
---build-arg port=1194 \
+--build-arg internal_port=1194 \
+--build-arg external_port=1194 \
 -t username/container:version --platform linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,linux/arm/v7 --push .
 ```
 #### Configure network
